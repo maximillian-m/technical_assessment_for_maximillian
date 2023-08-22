@@ -77,4 +77,25 @@ public class CourseRepositoryTest {
 
         assertThat(retrievedCourse).isNotNull();
     }
+
+    @Test
+    void updateMovie(){
+        Courses course = new Courses();
+        course.setPrerequisites("none");
+        course.setCourseId("C0211");
+        course.setCourseTitle("physics");
+        course.setCourseDescription("for 100level students");
+        course.setCourseCode("PHY101");
+        course.setLearningObjectives("All will be present");
+        Courses savedCourse =  courseRepository.save(course);
+
+        Courses retrievedCourse = courseRepository.findByCourseId(course.getCourseId())
+                .orElse(null);
+
+        retrievedCourse.setCourseDescription("blah");
+
+        Courses newCourse = courseRepository.save(retrievedCourse);
+
+        assertEquals("blah", newCourse.getCourseDescription());
+    }
 }

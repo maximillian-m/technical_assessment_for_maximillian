@@ -3,14 +3,15 @@ package com.students.studentservice.service;
 import com.students.studentservice.config.JwtUtils;
 import com.students.studentservice.config.SecurityUtils;
 import com.students.studentservice.dto.requests.StudentRegistrationRequest;
+import com.students.studentservice.dto.requests.UpdateCourseByStudent;
 import com.students.studentservice.dto.response.ApiResponse;
 import com.students.studentservice.exceptions.CustomException;
+import com.students.studentservice.models.Courses;
 import com.students.studentservice.models.Student;
 import com.students.studentservice.repository.CourseRepository;
 import com.students.studentservice.repository.StudentCourseRepository;
 import com.students.studentservice.repository.StudentRepository;
 import com.students.studentservice.service.serviceImpl.StudentServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +20,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -69,5 +72,32 @@ public class StudentServiceTest {
         assertThat(newStudent.isStatus()).isEqualTo(true);
     }
 
+    @Test
+    void updateCourseForStudent() throws CustomException {
+        UpdateCourseByStudent courseByStudent = new UpdateCourseByStudent();
+        courseByStudent.setCourseCode("PHY101");
+        courseByStudent.setCourseTitle("physics");
+        courseByStudent.setPrerequisites("none");
+        courseByStudent.setCourseDescription("none");
+        courseByStudent.setLearningObjectives("none");
 
+        Courses course = new Courses();
+        course.setPrerequisites("none");
+        course.setCourseId("C001");
+        course.setCourseTitle("physics");
+        course.setCourseDescription("for 100level students");
+        course.setCourseCode("PHY101");
+        course.setLearningObjectives("All will be present");
+
+
+        course.setCourseTitle("catechesis of technology");
+        course.setCourseCode("CT101");
+
+        when(courseRepository.findCoursesByCourseId("C001")).thenReturn(Optional.of(course));
+        when(courseRepository.save(course)).thenReturn(course);
+
+     ApiResponse<?> updatedCourse =  studentService.update(courseByStudent, "C001");
+        assertThat(updatedCourse).isNotNull();
+        assertThat(updatedCourse.getMessage()).isEqualTo("success");
+    }
 }

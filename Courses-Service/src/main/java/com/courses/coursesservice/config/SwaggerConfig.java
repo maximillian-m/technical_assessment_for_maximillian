@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig{
-
     @Value("${application.version}")
     private String version;
 

@@ -60,4 +60,21 @@ public class CourseRepositoryTest {
        assertNotNull(list);
        assertEquals(12,list.size());
     }
+
+    @Test
+    void getCourseById(){
+        Courses course = new Courses();
+        course.setCourseId("C0211");
+        course.setPrerequisites("none");
+        course.setCourseTitle("physics");
+        course.setCourseDescription("for 100level students");
+        course.setCourseCode("PHY101");
+        course.setLearningObjectives("All will be present");
+        Courses savedCourse =  courseRepository.save(course);
+
+        Courses retrievedCourse = courseRepository.findByCourseId(course.getCourseId())
+                .orElse(null);
+
+        assertThat(retrievedCourse).isNotNull();
+    }
 }

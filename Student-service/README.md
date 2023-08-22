@@ -14,3 +14,5 @@ The Student Service is responsible for managing student information, course allo
 
    ```sh
    https://github.com/maximillian-m/technical_assessment_for_maximillian.git
+
+2. Add Modules as maven projects.

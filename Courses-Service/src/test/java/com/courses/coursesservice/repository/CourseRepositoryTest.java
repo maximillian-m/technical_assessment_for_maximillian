@@ -98,4 +98,5 @@ public class CourseRepositoryTest {
 
         assertEquals("blah", newCourse.getCourseDescription());
     }
+
 }

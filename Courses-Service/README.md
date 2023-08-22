@@ -28,6 +28,7 @@ The Courses Service is a RESTful API that provides endpoints for managing course
 - Spring Boot
 - Spring Data JPA
 - Hibernate
+- mysql DataBase
 - H2 Database
 
 ### Installation
